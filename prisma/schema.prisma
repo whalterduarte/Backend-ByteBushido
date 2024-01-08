@@ -37,14 +37,14 @@ model Categoria {
 
 // Tabela Subcategorias
 model Subcategoria {
-  id          Int       @id @default(autoincrement())
-  slug        String
-  title       String
-  photo       String
-  cursos      Curso[]
-  createdAt   DateTime  @default(now())
-  categoria   Categoria @relation(fields: [categoriaId], references: [id])
-  categoriaId Int
+  id              Int       @id @default(autoincrement())
+  slugSubCategory String
+  title           String
+  photo           String
+  cursos          Curso[]
+  createdAt       DateTime  @default(now())
+  categoria       Categoria @relation(fields: [categoriaId], references: [id])
+  categoriaId     Int
 
   @@map("subcategorias")
 }

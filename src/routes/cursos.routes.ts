@@ -35,10 +35,15 @@ const upload: Multer = multer({
   }
 })
 
-
 const router = Router()
-
-router.get('/category', cursos.listCategory)
+//CATEGORY
+router.get('/', cursos.listCategory)
+router.get('/:slug', cursos.Category)
 router.post('/category', Auth.authorizeAdmin, upload.single('photo'), cursos.addCategory)
+//SUB-CATEGORY
+router.get('/:slug/subcategory', cursos.listSubcategories)
+router.get('/:slug/:slugSubCategory', cursos.subCategory)
+router.post('/category/subcategory', Auth.authorizeAdmin, upload.single('photo'), cursos.addSubcategory)
+//CURSOS
 
 export default router
