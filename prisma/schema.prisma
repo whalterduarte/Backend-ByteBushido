@@ -22,3 +22,42 @@ model User {
 
   @@map("users")
 }
+
+// Tabela Categorias
+model Categoria {
+  id            Int            @id @default(autoincrement())
+  slug          String
+  title         String
+  photo         String
+  subcategorias Subcategoria[]
+  createdAt     DateTime       @default(now())
+
+  @@map("categorias")
+}
+
+// Tabela Subcategorias
+model Subcategoria {
+  id          Int       @id @default(autoincrement())
+  slug        String
+  title       String
+  photo       String
+  cursos      Curso[]
+  createdAt   DateTime  @default(now())
+  categoria   Categoria @relation(fields: [categoriaId], references: [id])
+  categoriaId Int
+
+  @@map("subcategorias")
+}
+
+// Tabela Cursos
+model Curso {
+  id             Int          @id @default(autoincrement())
+  slug           String
+  title          String
+  file           String
+  createdAt      DateTime     @default(now())
+  subcategoria   Subcategoria @relation(fields: [subcategoriaId], references: [id])
+  subcategoriaId Int
+
+  @@map("cursos")
+}

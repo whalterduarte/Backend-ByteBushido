@@ -1,5 +1,6 @@
 import express, {Request, Response}  from "express"
 import login from './src/routes/login.routes'
+import cursos from './src/routes/cursos.routes'
 import bodyParser from 'body-parser'
 import path from 'path'
 
@@ -17,6 +18,7 @@ const port = process.env.PORT
  //Rotas
    //Home
  app.use('/', login)
+ app.use('/cursos', cursos)
 
 
 //Para rotas não encotradas

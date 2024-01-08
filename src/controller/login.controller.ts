@@ -26,13 +26,14 @@ export const login = async (req:Request, res:Response) =>{
         
         return res.status(401).json({ error: 'Senha incorreta' })
       }else {
+        const role: string = existingUser.role
         const jwtKey: string = process.env.JWT_KEY || 'whalter'
         const token = JWT.sign(
         { userId: existingUser.id, email },
                   jwtKey,
         { expiresIn: '2h' })
 
-        return res.json({ success: true, userId: existingUser.id,email, token })
+        return res.json({ success: true, userId: existingUser.id,email, role, token })
       }
 
     } catch (error) {

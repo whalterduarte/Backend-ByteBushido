@@ -1,11 +1,9 @@
 import { Router,  Request, Response } from 'express'
-import * as list from '../controller/list.controller'
-import * as login from '../controller/login.controller'
-import * as register from '../controller/register.controller'
-import { Auth } from '../middleware/auth'
+import * as cursos from '../controller/cursos.controller'
 import multer, { Multer } from 'multer'
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 import multerS3 from 'multer-s3'
+import { Auth } from '../middleware/auth'
 
 const s3Client = new S3Client({
   region: process.env.AWS_REGION || 'sa-east-1',
@@ -37,11 +35,10 @@ const upload: Multer = multer({
   }
 })
 
+
 const router = Router()
 
-router.get('/users', Auth.authorizeAdmin, list.getAllUsers )
-router.post('/login', login.login)
-router.post('/register', upload.single('photo'), register.newUser)
+router.get('/category', cursos.listCategory)
+router.post('/category', Auth.authorizeAdmin, upload.single('photo'), cursos.addCategory)
 
-export default router;
-
+export default router
