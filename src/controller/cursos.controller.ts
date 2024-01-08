@@ -135,36 +135,44 @@ export const listCategory = async (req: Request, res: Response) => {
 
   //POST SUB-CATEGORIA
   export const addSubcategory = async (req: Request, res: Response) => {
-    if (!req.file) {
-      return res.status(404).json({ error: 'File not sent' });
+    // Aceita apenas imagens
+    if (req.file) {
+      const file = req.file as UploadedFile;
+    } else {
+      res.status(404).json({ error: 'Arquivo não enviado' });
+      return;
     }
-  
-    const file = req.file as UploadedFile;
   
     const { slugSubCategory, title, categoriaId } = req.body;
-    if (!slugSubCategory || !title || !categoriaId) {
-      return res.status(400).json({ error: 'title e categoriaId são campos obrigatórios' });
-    }
+    const photo: string = `${process.env.BASE}/${(req.file as Express.MulterS3.File)?.key}`;
   
     try {
-      const existingSubcategory = await prisma.subcategoria.findFirst({
+      // Verifica se a subcategoria já existe
+      const existingCategory = await prisma.subcategoria.findFirst({
         where: {
           slugSubCategory: slugSubCategory,
         },
       });
   
-      if (existingSubcategory) {
-        return res.status(409).json({ error: 'Subcategory with the same slug already exists' });
+      if (existingCategory) {
+        return res.status(409).json({ error: 'Subcategoria já existente' });
       }
   
-      const photo: string = `${process.env.BASE}/${(req.file as Express.MulterS3.File)?.key}`;
+      // Verifica se todos os campos necessários estão preenchidos
+      if (!slugSubCategory || !title || !categoriaId) {
+        return res.status(404).json({ error: 'Preencha todos os campos obrigatórios' });
+      }
   
+      // Converte categoriaId para um número
+      const categoriaIdNumber = parseInt(categoriaId, 10);
+  
+      // Cria uma nova subcategoria associada à categoria especificada
       const newSubcategory = await prisma.subcategoria.create({
         data: {
           slugSubCategory,
           title,
           photo,
-          categoriaId: parseInt(categoriaId),
+          categoriaId: categoriaIdNumber,
         },
       });
   
@@ -174,3 +182,36 @@ export const listCategory = async (req: Request, res: Response) => {
       return res.status(500).json({ error: 'Erro ao adicionar subcategoria' });
     }
   };
+  
+  // CURSOS/////////////////
+
+  export const listCourses = async (req: Request, res: Response) => {
+   
+  };
+
+  export const Courses = async (req: Request, res: Response) => {
+   
+  };
+  
+  //ADD CURSO
+ export const addCourse = async (req: Request, res: Response) => {
+  // Aceita apenas imagens
+  if (req.file) {
+    const file = req.file as UploadedFile;
+  } else {
+    res.status(404).json({ error: 'Arquivo não enviado' });
+    return;
+  }
+
+  const { subcategoriaId, title } = req.body;
+  const video: string = `${process.env.BASE}/${(req.file as Express.MulterS3.File)?.key}`;
+
+  try {
+
+    
+    return res.status(201).json({ });
+  } catch (error) {
+    console.error('Erro ao adicionar curso:', error);
+    return res.status(500).json({ error: 'Erro ao adicionar curso' });
+  }
+};

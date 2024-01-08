@@ -24,7 +24,7 @@ const upload: Multer = multer({
     key: (req: Request, file, cb) => {
       let randomNamePhoto = Math.floor(Math.random() * 9999999);
       const originalname = file.originalname || 'default'
-      cb(null, 'uploads/user' + originalname + randomNamePhoto + Date.now() + '.jpg')
+      cb(null, 'user/user' + originalname + randomNamePhoto + Date.now() + '.jpg')
     },
   }),
   fileFilter: (req: Request, file: Express.Multer.File, cb) => {
