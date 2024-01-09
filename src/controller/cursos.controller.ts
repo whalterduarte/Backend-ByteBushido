@@ -232,7 +232,7 @@ export const listCourses = async (req: Request, res: Response) => {
 };
 
 // Recupera detalhes de um curso específico
-export const getCourse = async (req: Request, res: Response) => {
+export const Courses = async (req: Request, res: Response) => {
   const { slugCursos } = req.params;
 
   try {
@@ -253,10 +253,6 @@ export const getCourse = async (req: Request, res: Response) => {
   }
 };
 
-  export const Courses = async (req: Request, res: Response) => {
-    return res.json({})
-  };
-  
   //ADD CURSO
   export const addCourse = async (req: Request, res: Response) => {
     // Aceita apenas vídeos
