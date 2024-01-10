@@ -43,7 +43,7 @@ router.get('/:slug', cursos.Category)
 router.post('/category', Auth.authorizeAdmin, upload.single('photo'), cursos.addCategory)
 
 //SUB-CATEGORY
-router.get('/:slug/subcategory', cursos.listSubcategories)
+router.get('/:slug/subcategory',Auth.authorizeUser, cursos.listSubcategories)
 router.get('/:slug/:slugSubCategory', Auth.authorizeUser, cursos.subCategory)
 router.post('/category/subcategory', Auth.authorizeAdmin, upload.single('photo'), cursos.addSubcategory)
 

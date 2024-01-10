@@ -32,21 +32,40 @@ export const listCategory = async (req: Request, res: Response) => {
 };
   //GET POR CATEGORIA DINAMICA
   export const Category = async (req: Request, res: Response) => {
-    const {slug} = req.params
-    const categoria = await prisma.categoria.findFirst({
-      where:{
-        slug
-      }
-    })
-    try {
-      if (!categoria) {
-        return res.status(404).json({status: false, Server: 'Nenhum categoria encontrado'})
-      }
-      return await res.json({status: true, categoria})
+    const { slug } = req.params;
   
+    try {
+      // Busca a categoria específica
+      const categoria = await prisma.categoria.findFirst({
+        where: {
+          slug,
+        },
+      });
+  
+      if (!categoria) {
+        return res.status(404).json({ status: false, Server: 'Nenhuma categoria encontrada' });
+      }
+  
+      // Busca todas as subcategorias associadas à categoria específica
+      const subcategorias = await prisma.subcategoria.findMany({
+        where: {
+          categoriaId: categoria.id,
+        },
+        include: {
+          cursos: true,
+        },
+      });
+  
+      return res.json({
+        status: true,
+        categoria: {
+          ...categoria,
+          subcategorias, // Adiciona as subcategorias à resposta
+        },
+      });
     } catch (error) {
-      console.log(error)
-      return res.status(404).json({Server: 'Error interno'})
+      console.log(error);
+      return res.status(500).json({ Server: 'Erro interno' });
     }
   };
 
@@ -210,8 +229,7 @@ export const listCategory = async (req: Request, res: Response) => {
     return slug;
   }
   
-  // CURSOS/////////////////
-
+// CURSOS
  // Lista todos os cursos
 export const listCourses = async (req: Request, res: Response) => {
   const page = parseInt(req.query.page as string) || 1;

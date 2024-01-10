@@ -3,13 +3,20 @@ import login from './src/routes/login.routes'
 import cursos from './src/routes/cursos.routes'
 import bodyParser from 'body-parser'
 import path from 'path'
-
+import cors from "cors"
 
 require('dotenv').config()
 const app = express()
 const port = process.env.PORT
 
-
+  // Configuração do CORS
+  const corsOptions = {
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 200,
+  }
+  app.use(cors(corsOptions));
 
  //Body Parser
  app.use(bodyParser.urlencoded({extended: false}))
