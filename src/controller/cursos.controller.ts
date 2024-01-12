@@ -16,7 +16,7 @@ import prisma from "../libs/prisma"
   //GET E LISTA PELA DATA
 export const listCategory = async (req: Request, res: Response) => {
   const page = parseInt(req.query.page as string) || 1;
-  const pageSize = 3; 
+  const pageSize =4; 
   try {
     const categories = await prisma.categoria.findMany({
       take: pageSize, 
@@ -52,6 +52,7 @@ export const listCategory = async (req: Request, res: Response) => {
           categoriaId: categoria.id,
         },
         include: {
+          
           cursos: true,
         },
       });
@@ -59,8 +60,8 @@ export const listCategory = async (req: Request, res: Response) => {
       return res.json({
         status: true,
         categoria: {
-          ...categoria,
-          subcategorias, // Adiciona as subcategorias à resposta
+          categoria,
+          subcategorias,
         },
       });
     } catch (error) {
@@ -110,24 +111,6 @@ export const listCategory = async (req: Request, res: Response) => {
 
 
 // LOGICA SUB-CATEGORIA
-  //GET ALL E LISTA PELA DATA
-  export const listSubcategories = async (req: Request, res: Response) => {
-    const page = parseInt(req.query.page as string) || 1;
-  const pageSize = 5; 
-  try {
-    const subCategory = await prisma.subcategoria.findMany({
-      take: pageSize, 
-      skip: (page - 1) * pageSize,
-      orderBy: { createdAt: 'desc' },
-    });
-
-    return res.json({ subCategory });
-  } catch (error) {
-    console.error('Erro ao listar sub categorias:', error);
-    return res.status(500).json({ error: 'Erro ao listar sub categorias' });
-  }
-  };
-
   //GET SUB-CATEGORY
 
   export const subCategory = async (req: Request, res: Response) => {
@@ -229,6 +212,7 @@ export const listCategory = async (req: Request, res: Response) => {
     return slug;
   }
   
+/**
 // CURSOS
  // Lista todos os cursos
 export const listCourses = async (req: Request, res: Response) => {
@@ -357,4 +341,5 @@ export const Courses = async (req: Request, res: Response) => {
   
     return slug;
   }
-  
+   
+*/
