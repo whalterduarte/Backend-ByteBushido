@@ -1,34 +1,32 @@
-# Iniciando a Base para Projetos em TypeScript
+# API utilizando Multer e SW3 em Node.js
 
-Este é um repositório base que você pode clonar para acelerar a inicialização de novos projetos Node.js. Ele inclui as seguintes dependências:
+Esta API em Node.js utiliza Multer para lidar com uploads de arquivos e SW3 para armazenamento em nuvem. Oferece uma solução eficiente e escalável para o gerenciamento de uploads de arquivos.
 
-## Dependências
+## Configuração
 
-- `body-parser`: Middleware para análise de dados do corpo das solicitações HTTP.
+Antes de começar a utilizar a API, siga os passos abaixo:
 
-- `dotenv`: Biblioteca para carregar variáveis de ambiente a partir de um arquivo `.env`.
+1. **Instalação de Dependências:**
+   Execute o seguinte comando para instalar as dependências necessárias:
 
-- `express`: Framework web minimalista para construir aplicativos e APIs web.
+   ```bash
+   npm install
+   ```
 
-- `express-handlebars`: Um mecanismo de modelo para Express.js que permite criar visualizações HTML dinâmicas usando Handlebars.js.
+# Configuração do SW3
 
-- `handlebars`: O Handlebars.js é um mecanismo de template que permite a geração de conteúdo HTML dinâmico.
+SW3_ACCESS_KEY=sua_access_key
+SW3_SECRET_KEY=sua_secret_key
+SW3_BUCKET=seu_bucket
 
-- `mysql2`: Um driver MySQL para Node.js que permite a comunicação com bancos de dados MySQL.
+# Configuração do Multer
 
-- `sequelize`: Um ORM (Object-Relational Mapping) para Node.js que simplifica a interação com bancos de dados SQL, incluindo MySQL.
+# Verifique o arquivo `multerConfig.js` para ajustar configurações como o diretório de armazenamento local e os tipos de arquivo permitidos.
 
-- `validator`: Uma biblioteca para validação de dados, como email, URLs, números e muito mais.
+# POST /upload
 
-## Como Iniciar um Projeto
+curl -X POST -H "Content-Type: multipart/form-data" -F "file=@caminho/do/arquivo.txt" http://localhost:3000/upload
 
-1. Clone este repositório em seu sistema local:
+# GET /download/:filename
 
-```bash
-git clone https://github.com/whalterduarte/BaseprojetoNODEJS
-
-```bash
-2. Depois de clonado execute o comando no terminal na pasta do projeto:
-npm install
-
-@WHALTERDUARTE 
+curl -o arquivo_baixado.txt http://localhost:3000/download/nome_do_arquivo.txt
