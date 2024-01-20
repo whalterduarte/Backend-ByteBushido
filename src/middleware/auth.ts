@@ -85,9 +85,9 @@ export const Auth = {
 };
 
 // Função auxiliar para obter o ID do usuário a partir do token
-function getUserIdFromToken(
+export const getUserIdFromToken = (
   authorizationHeader: string | undefined
-): number | null {
+): number | null => {
   if (authorizationHeader) {
     const [, token] = authorizationHeader.split("Bearer ");
     try {
@@ -101,4 +101,4 @@ function getUserIdFromToken(
     }
   }
   return null;
-}
+};
