@@ -59,8 +59,8 @@ model Curso {
   slugCurso          String
   title         String
   video         String
-  description String
-  git String
+  description String @default("") 
+  git String @default("") 
 
   createdAt     DateTime       @default(now())
 

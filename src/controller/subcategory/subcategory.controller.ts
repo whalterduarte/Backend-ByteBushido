@@ -18,11 +18,14 @@ interface UploadedFile {
 
 export const addSubcategory = async (req: Request, res: Response) => {
   const { title, categoriaId } = req.body;
-  const slugSub = slugify(title, { lower: true });
   const photo: string = `${process.env.BASE}/${
     (req.file as Express.MulterS3.File)?.key
   }`;
   try {
+    if (!title) {
+      return res.status(400).json({ error: "O título é obrigatório" });
+    }
+    const slugSub = slugify(title, { lower: true });
     const existingSubCategory = await prisma.subcategoria.findFirst({
       where: {
         slugSub: slugSub,

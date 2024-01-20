@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
-import * as cursos from "../controller/category/category.controller";
+import * as category from "../controller/category/category.controller";
 import * as subcategoria from "../controller/subcategory/subcategory.controller";
+import * as cursos from "../controller/curso/curso.controller";
 import multer, { Multer } from "multer";
 import { Auth } from "../middleware/auth";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
@@ -48,7 +49,7 @@ const upload: Multer = multer({
 
 const router = Router();
 //CATEGORY
-router.get("/", cursos.listCategory);
+router.get("/", category.listCategory);
 router.post(
   "/category",
   Auth.authorizeAdmin,
@@ -69,7 +70,7 @@ router.post(
       next();
     });
   },
-  cursos.addCategory
+  category.addCategory
 );
 
 //SUB CATEGORY
@@ -94,5 +95,29 @@ router.post(
     });
   },
   subcategoria.addSubcategory
+);
+
+//Cursos
+router.post(
+  "/categorias/subcategorias/cursos",
+  Auth.authorizeAdmin,
+  (req: Request, res: Response, next: any) => {
+    upload.single("video")(req, res, (err: any) => {
+      if (err instanceof multer.MulterError) {
+        // Erros do Multer
+        if (err.code === "LIMIT_UNEXPECTED_FILE") {
+          return res.status(400).json({ error: "Apenas um aqruivo permitido" });
+        }
+        return res.status(500).json({ error: "Erro durante o upload" });
+      } else if (err) {
+        // Outros erros
+        return res
+          .status(500)
+          .json({ error: err.message || "Erro durante o upload" });
+      }
+      next();
+    });
+  },
+  cursos.addCursos
 );
 export default router;

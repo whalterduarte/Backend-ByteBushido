@@ -17,7 +17,7 @@ interface UploadedFile {
 //GET E LISTA PELA DATA
 export const listCategory = async (req: Request, res: Response) => {
   const page = parseInt(req.query.page as string) || 1;
-  const pageSize = 4;
+  const pageSize = 10;
   try {
     const categoriesWithSubcategoriesAndCourses =
       await prisma.categoria.findMany({
