@@ -39,7 +39,7 @@ export const Auth = {
     if (userId) {
       try {
         const user = await prisma.user.findUnique({ where: { id: userId } });
-        if (user && user.role === "user") {
+        if ((user && user.role === "user") || (user && user.role === "admin")) {
           next();
         } else {
           res.status(403).json({

@@ -45,11 +45,15 @@ export const addCategory = async (req: Request, res: Response) => {
   const { title } = req.body as {
     title: string;
   };
-  const slug = slugify(title, { lower: true });
+
   const photo: string = `${process.env.BASE}/${
     (req.file as Express.MulterS3.File)?.key
   }`;
   try {
+    if (!title) {
+      return res.status(400).json({ error: "O título é obrigatório" });
+    }
+    const slug = slugify(title, { lower: true });
     const existingCategory = await prisma.categoria.findFirst({
       where: {
         slug: slug,

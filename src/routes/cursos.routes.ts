@@ -49,7 +49,7 @@ const upload: Multer = multer({
 
 const router = Router();
 //CATEGORY
-router.get("/", category.listCategory);
+router.get("/", Auth.authorizeUser, category.listCategory);
 router.post(
   "/category",
   Auth.authorizeAdmin,
@@ -97,7 +97,7 @@ router.post(
   subcategoria.addSubcategory
 );
 
-//Cursos
+//CUSRSO
 router.post(
   "/categorias/subcategorias/cursos",
   Auth.authorizeAdmin,
