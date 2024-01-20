@@ -73,5 +73,26 @@ router.post(
 );
 
 //SUB CATEGORY
-router.post("/categorias/subcategorias", subcategoria.addSubcategory);
+router.post(
+  "/categorias/subcategorias",
+  Auth.authorizeAdmin,
+  (req: Request, res: Response, next: any) => {
+    upload.single("photo")(req, res, (err: any) => {
+      if (err instanceof multer.MulterError) {
+        // Erros do Multer
+        if (err.code === "LIMIT_UNEXPECTED_FILE") {
+          return res.status(400).json({ error: "Apenas uma foto permitida" });
+        }
+        return res.status(500).json({ error: "Erro durante o upload" });
+      } else if (err) {
+        // Outros erros
+        return res
+          .status(500)
+          .json({ error: err.message || "Erro durante o upload" });
+      }
+      next();
+    });
+  },
+  subcategoria.addSubcategory
+);
 export default router;
