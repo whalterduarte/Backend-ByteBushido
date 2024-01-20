@@ -1,19 +1,9 @@
 import { Request, Response } from "express";
 import prisma from "../../libs/prisma";
 import slugify from "slugify";
+import { UploadedFile } from "../../types/UploadedFile";
 
-// MULTER
-interface UploadedFile {
-  fieldname: string;
-  originalname: string;
-  encoding: string;
-  mimetype: string;
-  destination: string;
-  filename: string;
-  path: string;
-  size: number;
-}
-
+//ADD CURSO
 export const addCursos = async (req: Request, res: Response) => {
   const { title, description, git, subcategoriaId } = req.body;
   const video: string = `${process.env.BASE}/${

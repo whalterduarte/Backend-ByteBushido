@@ -1,18 +1,8 @@
 import { Request, Response } from "express";
 import prisma from "../../libs/prisma";
 import slugify from "slugify";
-//MULTER
-//Types img
-interface UploadedFile {
-  fieldname: string;
-  originalname: string;
-  encoding: string;
-  mimetype: string;
-  destination: string;
-  filename: string;
-  path: string;
-  size: number;
-}
+import { UploadedFile } from "../../types/UploadedFile";
+
 // LOGICA CATEGORIA
 //GET E LISTA PELA DATA
 export const listCategory = async (req: Request, res: Response) => {

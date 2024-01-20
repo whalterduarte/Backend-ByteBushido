@@ -1,21 +1,8 @@
-// SubcategoriaController.ts
-
 import { Request, Response } from "express";
 import prisma from "../../libs/prisma";
 import slugify from "slugify";
-
-// MULTER
-interface UploadedFile {
-  fieldname: string;
-  originalname: string;
-  encoding: string;
-  mimetype: string;
-  destination: string;
-  filename: string;
-  path: string;
-  size: number;
-}
-
+import { UploadedFile } from "../../types/UploadedFile";
+//ADD SUB-CATEGORY
 export const addSubcategory = async (req: Request, res: Response) => {
   const { title, categoriaId } = req.body;
   const photo: string = `${process.env.BASE}/${
