@@ -14,6 +14,8 @@ datasource db {
 model User {
   id       Int     @id @default(autoincrement())
   photo    String
+  git String
+  linkedin String
   name     String?
   email    String  @unique
   password String
@@ -29,35 +31,41 @@ model Categoria {
   slug          String
   title         String
   photo         String
-  subcategorias Subcategoria[]
   createdAt     DateTime       @default(now())
 
-  @@map("categorias")
+  // Relação com Subcategorias
+  subcategorias Subcategoria[]
 }
 
 // Tabela Subcategorias
 model Subcategoria {
-  id              Int       @id @default(autoincrement())
-  slugSubCategory String
-  title           String
-  photo           String
-  cursos          Curso[]
-  createdAt       DateTime  @default(now())
-  categoria       Categoria @relation(fields: [categoriaId], references: [id])
-  categoriaId     Int
+  id            Int            @id @default(autoincrement())
+  slugSub          String
+  title         String
+  photo         String
+  createdAt     DateTime       @default(now())
 
-  @@map("subcategorias")
+  // Chave estrangeira para a Categoria principal
+  categoriaId   Int
+  categoria     Categoria      @relation(fields: [categoriaId], references: [id])
+
+  // Relação com Cursos
+  cursos        Curso[]
 }
 
 // Tabela Cursos
 model Curso {
-  id             Int          @id @default(autoincrement())
-  slugCursos     String
-  title          String
-  file           String
-  createdAt      DateTime     @default(now())
-  subcategoria   Subcategoria @relation(fields: [subcategoriaId], references: [id])
-  subcategoriaId Int
+  id            Int            @id @default(autoincrement())
+  slugCurso          String
+  title         String
+  video         String
+  description String
+  git String
 
-  @@map("cursos")
+  createdAt     DateTime       @default(now())
+
+  // Chave estrangeira para a Subcategoria
+  subcategoriaId Int
+  subcategoria   Subcategoria   @relation(fields: [subcategoriaId], references: [id])
 }
+
