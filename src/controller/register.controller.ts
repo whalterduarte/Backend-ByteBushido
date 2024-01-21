@@ -21,15 +21,28 @@ export const newUser = async (req: Request, res: Response) => {
   if (req.file) {
     const file = req.file as UploadedFile;
   } else {
-    res.status(404).json({ error: "File not sent" });
+    res.status(404).json({ Server: "Foto não enviada!" });
     return;
   }
 
   const { email, name, git, linkedin, password }: user = await req.body;
 
-  if (!email || !password || !name || !git) {
-    return res.status(404).json({ error: "Preencha os campos" });
+  if (!email) {
+    return res.status(404).json({ Server: "Preencha o campo E-Mail" });
   }
+  if (!name) {
+    return res.status(404).json({ Server: "Preencha o campo Nome" });
+  }
+  if (!password) {
+    return res.status(404).json({ Server: "Preencha o campo da Senha" });
+  }
+  if (!git) {
+    return res.status(404).json({ Server: "Preencha o campo GitHub" });
+  }
+  if (!linkedin) {
+    return res.status(404).json({ Server: "Preencha o campo do Linkedin" });
+  }
+
   const photo: string = `${process.env.BASE}/${
     (req.file as Express.MulterS3.File)?.key
   }`;
