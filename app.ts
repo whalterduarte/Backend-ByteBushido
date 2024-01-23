@@ -9,7 +9,7 @@ require("dotenv").config();
 const app = express();
 const port = process.env.PORT;
 
-//Public
+//Publics
 app.use(express.static(path.join(__dirname, "./public")));
 
 // Configuração do CORS
