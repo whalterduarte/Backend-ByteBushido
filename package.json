@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon -e ts,json,handlebars app.ts",
-    "build": "npm install && npx prisma db push"
+    "build": "npx prisma db push"
   },
   "keywords": [],
   "author": "",
