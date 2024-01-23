@@ -21,7 +21,8 @@ app.use(cors(corsOptions));
 //Body Parser
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
+//Public
+app.use(express.static(path.join(__dirname, "./public")));
 //Rotas
 //Home
 app.use("/", login);
