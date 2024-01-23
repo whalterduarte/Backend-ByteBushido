@@ -6,8 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon -e ts,json,handlebars app.ts",
-    "build": "tsc",
-    "vercel-build": "npx prisma db push && build"
+    "vercel-build": "tsc && npx prisma db push && build"
   },
   "keywords": [],
   "author": "",
