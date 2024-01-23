@@ -26,7 +26,7 @@ export const listCategory = async (req: Request, res: Response) => {
     return res.json({ categories: categoriesWithSubcategoriesAndCourses });
   } catch (error) {
     console.error("Erro ao listar categorias:", error);
-    return res.status(500).json({ error: "Erro ao listar categorias" });
+    return res.status(500).json({ Server: "Erro ao listar categorias" });
   }
 };
 
@@ -41,7 +41,7 @@ export const addCategory = async (req: Request, res: Response) => {
   }`;
   try {
     if (!title) {
-      return res.status(400).json({ error: "O título é obrigatório" });
+      return res.status(400).json({ Server: "O título é obrigatório" });
     }
     const slug = slugify(title, { lower: true });
     const existingCategory = await prisma.categoria.findFirst({
@@ -50,17 +50,17 @@ export const addCategory = async (req: Request, res: Response) => {
       },
     });
     if (existingCategory) {
-      return res.status(409).json({ error: "Categoria ja existente" });
+      return res.status(409).json({ Server: "Categoria ja existente" });
     }
 
     if (!photo || !title) {
-      return res.status(404).json({ error: "Preencha os campos" });
+      return res.status(404).json({ Server: "Preencha os campos" });
     }
     //Accpts only image
     if (req.file) {
       const file = req.file as UploadedFile;
     } else {
-      res.status(404).json({ error: "File not sent" });
+      res.status(404).json({ Server: "Foto não enviada" });
       return;
     }
     const newCategory = await prisma.categoria.create({
@@ -74,6 +74,6 @@ export const addCategory = async (req: Request, res: Response) => {
     return res.status(201).json({ category: newCategory });
   } catch (error) {
     console.error("Erro ao adicionar categoria:", error);
-    return res.status(500).json({ error: "Erro ao adicionar categoria" });
+    return res.status(500).json({ Server: "Erro ao adicionar categoria" });
   }
 };

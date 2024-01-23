@@ -11,7 +11,7 @@ export const addCursos = async (req: Request, res: Response) => {
   }`;
   try {
     if (!title) {
-      return res.status(400).json({ error: "O título é obrigatório" });
+      return res.status(400).json({ Server: "O título é obrigatório" });
     }
     const slugCurso = slugify(title, { lower: true });
     const existngCurse = await prisma.curso.findFirst({
@@ -22,16 +22,16 @@ export const addCursos = async (req: Request, res: Response) => {
     if (existngCurse) {
       return res
         .status(409)
-        .json({ error: `Curso ja existente:  ${slugCurso}` });
+        .json({ Server: `Curso ja existente:  ${slugCurso}` });
     }
     if (!title || !video || !subcategoriaId) {
-      return res.status(404).json({ error: "Preencha os campos" });
+      return res.status(404).json({ Server: "Preencha os campos" });
     }
     //Accpts only video
     if (req.file) {
       const file = req.file as UploadedFile;
     } else {
-      res.status(404).json({ error: "Video não enviado" });
+      res.status(404).json({ Server: "Video não enviado" });
       return;
     }
 
@@ -48,6 +48,6 @@ export const addCursos = async (req: Request, res: Response) => {
     return res.status(201).json({ curso: newCurso });
   } catch (error) {
     console.log("Erro interno", error);
-    return res.status(500).json({ err: "Error interno", error });
+    return res.status(500).json({ err: "Erro interno", error });
   }
 };

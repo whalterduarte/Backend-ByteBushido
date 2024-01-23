@@ -10,7 +10,10 @@ export const addSubcategory = async (req: Request, res: Response) => {
   }`;
   try {
     if (!title) {
-      return res.status(400).json({ error: "O título é obrigatório" });
+      return res.status(400).json({ Server: "O título é obrigatório" });
+    }
+    if (!categoriaId) {
+      return res.status(400).json({ Server: "A Categoria e obrigatoria" });
     }
     const slugSub = slugify(title, { lower: true });
     const existingSubCategory = await prisma.subcategoria.findFirst({
@@ -21,17 +24,17 @@ export const addSubcategory = async (req: Request, res: Response) => {
     if (existingSubCategory) {
       return res
         .status(409)
-        .json({ error: `Sub Categoria ja existente:  ${slugSub}` });
+        .json({ Server: `Sub Categoria ja existente:  ${slugSub}` });
     }
 
     if (!title || !photo) {
-      return res.status(404).json({ error: "Preencha os campos" });
+      return res.status(404).json({ Server: "Preencha os campos" });
     }
     //Accpts only image
     if (req.file) {
       const file = req.file as UploadedFile;
     } else {
-      res.status(404).json({ error: "Photo não enviada" });
+      res.status(404).json({ Server: "Photo não enviada" });
       return;
     }
     const newSubCategory = await prisma.subcategoria.create({
@@ -44,7 +47,7 @@ export const addSubcategory = async (req: Request, res: Response) => {
     });
     return res.status(201).json({ subCategory: newSubCategory });
   } catch (error) {
-    console.error("Erro ao adicionar subcategoria:", error);
-    return res.status(500).json({ res: "Error interno", error });
+    console.log("Erro ao adicionar subcategoria:", error);
+    return res.status(500).json({ res: "Server interno", error });
   }
 };
