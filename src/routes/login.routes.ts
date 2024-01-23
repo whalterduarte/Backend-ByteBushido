@@ -41,7 +41,7 @@ const upload: Multer = multer({
 });
 
 const router = Router();
-
+//user
 router.get("/users", Auth.authorizeUser, list.getUser);
 router.post("/login", login.login);
 router.post("/register", upload.single("photo"), register.newUser);
