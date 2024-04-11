@@ -9,8 +9,11 @@ require("dotenv").config();
 const app = express();
 const port = process.env.PORT;
 
-//Publics
-app.use(express.static(path.join(__dirname, "./public")));
+// Servir arquivos estáticos da pasta 'dist'
+app.use("/dist",express.static(path.join(__dirname, "dist")));
+// Servir arquivos estáticos da pasta 'dist/user'
+app.use("/user", express.static(path.join(__dirname, "dist", "user")));
+
 
 // Configuração do CORS
 const corsOptions = {

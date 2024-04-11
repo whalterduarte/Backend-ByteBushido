@@ -6,7 +6,7 @@ import JWT from "jsonwebtoken";
 require("dotenv").config;
 
 export const login = async (req: Request, res: Response) => {
-  const { email, password }: user = await req.body;
+  const { email, password }: user =  req.body;
   if (!email || !password) {
     return res.status(404).json({ error: "Preencha os campos" });
   }

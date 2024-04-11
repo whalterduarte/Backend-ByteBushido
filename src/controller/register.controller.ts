@@ -37,16 +37,8 @@ export const newUser = async (req: Request, res: Response) => {
   if (!password) {
     return res.status(404).json({ Server: "Preencha o campo da Senha" });
   }
-  if (!git) {
-    return res.status(404).json({ Server: "Preencha o campo GitHub" });
-  }
-  if (!linkedin) {
-    return res.status(404).json({ Server: "Preencha o campo do Linkedin" });
-  }
-
-  const photo: string = `${process.env.BASE}/${
-    (req.file as Express.MulterS3.File)?.key
-  }`;
+  const photoFileName: string = req.file.filename;
+  const photo: string = `${process.env.BASE}/user/${photoFileName}`;
   try {
     const existingUser = await prisma.user.findUnique({
       where: {
