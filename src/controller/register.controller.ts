@@ -3,7 +3,7 @@ import prisma from "../libs/prisma";
 import { user } from "../types/user";
 import bcrypt from "bcrypt";
 import JWT from "jsonwebtoken";
-import { config } from "dotenv";
+require("dotenv").config;
 
 export const newUser = async (req: Request, res: Response) => {
   //Types img
@@ -17,6 +17,9 @@ export const newUser = async (req: Request, res: Response) => {
     path: string;
     size: number;
   }
+  //
+
+  const { email, name, git, linkedin, password }: user = await req.body;
   //Accpts only image
   if (req.file) {
     const file = req.file as UploadedFile;
@@ -24,8 +27,6 @@ export const newUser = async (req: Request, res: Response) => {
     res.status(404).json({ Server: "Foto não enviada!" });
     return;
   }
-
-  const { email, name, git, linkedin, password }: user = await req.body;
 
   if (!email) {
     return res.status(404).json({ Server: "Preencha o campo E-Mail" });
