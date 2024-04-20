@@ -6,9 +6,9 @@ import { UploadedFile } from "../../types/UploadedFile";
 //ADD CURSO
 export const addCursos = async (req: Request, res: Response) => {
   const { title, description, git, subcategoriaId } = req.body;
-  const video: string = `${process.env.BASE}/${
-    (req.file as Express.MulterS3.File)?.key
-  }`;
+  const file = req.file as UploadedFile;
+  const fileName = file.filename;
+  const video = `${process.env.BASE}/dist/curso/${fileName}`;
   try {
     if (!title) {
       return res.status(400).json({ Server: "O título é obrigatório" });

@@ -35,10 +35,9 @@ export const addCategory = async (req: Request, res: Response) => {
   const { title } = req.body as {
     title: string;
   };
-
-  const photo: string = `${process.env.BASE}/${
-    (req.file as Express.MulterS3.File)?.key
-  }`;
+  const file = req.file as UploadedFile;
+  const fileName = file.filename;
+  const photo = `${process.env.BASE}/dist/curso/${fileName}`;
   try {
     if (!title) {
       return res.status(400).json({ Server: "O título é obrigatório" });

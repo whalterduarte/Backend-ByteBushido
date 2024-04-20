@@ -4,8 +4,9 @@ import cursos from "./src/routes/cursos.routes";
 import bodyParser from "body-parser";
 import path from "path";
 import cors from "cors";
-
 require("dotenv").config();
+
+//Inicia Server
 const app = express();
 const port = process.env.PORT;
 
@@ -17,7 +18,7 @@ app.use("/user", express.static(path.join(__dirname, "dist", "user")));
 
 // Configuração do CORS
 const corsOptions = {
-  origin: "*",
+  origin: "https://cursos.bytebushido.tech",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   optionsSuccessStatus: 200,
@@ -29,6 +30,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //Rotas
+
 //Home
 app.use("/", login);
 app.use("/cursos", cursos);
@@ -38,4 +40,7 @@ app.use((req: Request, res: Response) => {
   res.status(404).json({ Server: "Pagina não encontrada" });
 });
 
-app.listen(port, () => console.log(`Servidor rodando na porta : ${port}!`));
+
+app.listen(port, () => {
+  console.log(`Servidor rodando em https://api.bytebushido.tech`);
+});

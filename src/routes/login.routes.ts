@@ -9,7 +9,6 @@ import path from "path";
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const uploadPath = path.join(__dirname, "../../dist/user");
-    // Verifique se o diretório de destino existe
     cb(null, uploadPath);
   },
   filename: (req, file, cb) => {
@@ -33,7 +32,7 @@ const upload: Multer = multer({
 
 const router = Router();
 
-router.get("/users", Auth.authorizeAdmin, list.getUser);
+router.get("/users", Auth.authorizeUser, list.getUser);
 router.post("/login", login.login);
 router.post("/register", upload.single("photo"), register.newUser);
 
