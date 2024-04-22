@@ -18,7 +18,7 @@ app.use("/user", express.static(path.join(__dirname, "dist", "user")));
 
 // Configuração do CORS
 const corsOptions = {
-  origin: "https://cursos.bytebushido.tech",
+  origin: ["https://cursos.bytebushido.tech", "http://whalter.serveirc.com:3000"] ,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   optionsSuccessStatus: 200,
@@ -42,5 +42,5 @@ app.use((req: Request, res: Response) => {
 
 
 app.listen(port, () => {
-  console.log(`Servidor rodando em https://api.bytebushido.tech`);
+  console.log(`Servidor rodando em ${process.env.BASE}`);
 });
